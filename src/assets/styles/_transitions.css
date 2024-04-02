@@ -1,0 +1,91 @@
+.transition-200 {
+    transition: all 200ms ease-in-out;
+}
+
+.transition-300 {
+    transition: all 300ms ease-in-out;
+}
+
+.fade-enter-active {
+    animation: Fade 0.2s ease;
+}
+.fade-leave-active {
+    animation: Fade 200ms ease-in reverse forwards;
+}
+
+@keyframes Fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.dropdown-enter-active {
+    animation: Fade 0.2s ease;
+}
+.dropdown-leave-active {
+    animation: Fade 200ms ease-in reverse forwards;
+}
+
+@keyframes Fade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+
+    }
+}
+
+@keyframes dropdown {
+    0% {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-enter-active {
+    animation: dropdown 0.15s linear;
+}
+
+.dropdown-leave-active {
+    animation: dropdown 0.15s linear reverse;
+}
+
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+    transition: all 0.2s ease;
+}
+
+.slide-left-enter-from {
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
+.slide-left-leave-to {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-right-enter-active,
+.slide-right-leave-active {
+    transition: all 0.2s ease;
+}
+
+.slide-right-enter-from {
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-right-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
+}
