@@ -4,7 +4,6 @@ import { useMounted } from "@/composables/useMounted";
 
 import { computed, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
-import { useTableFetch } from "@/composables/useTableFetch";
 import CTableWrapper from "@/components/Common/Table/CTableWrapper.vue";
 import { exchangeActions, modelHead } from "@/modules/Albums/data";
 import { useAlbumsStore } from "@/modules/Albums/store";
@@ -23,9 +22,6 @@ const routes = computed(() => [
 ]);
 const albums = computed(() => store.albums as IAlbum[]);
 const users = computed(() => store.users as IUser[]);
-
-const { paginationData, onSearch, onPageChange, onChangeLimit } =
-  useTableFetch("/albums/a");
 
 onMounted(() => {
   store.fetchAlbums().finally(() => (loading.value = false));
@@ -48,21 +44,13 @@ function getUser(id: number) {
     </Teleport>
 
     <main>
-      <!--      <pre>{{ users }}</pre>-->
       <CTableWrapper
-        :current-page="paginationData?.currentPage"
         :data="albums"
         :head="modelHead"
-        :items-per-page="10"
-        :limit="paginationData?.defaultLimit"
         :loading="loading"
         :subtitle="t('albums_number', { count: albums?.length ?? 0 })"
         :title="$t('albums')"
-        :total="paginationData?.total"
         th-class="!bg-gray !text-gray-100 last:!text-right"
-        @itemsPerPage="onChangeLimit"
-        @pageChange="onPageChange"
-        @search="onSearch"
       >
         <template #id="{ row }">
           <span class="text-dark text-xs font-medium">{{ row?._index }}.</span>

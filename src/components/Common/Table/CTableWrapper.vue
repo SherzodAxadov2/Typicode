@@ -29,10 +29,15 @@
         <CTable
           :key="loading"
           :body-tr-class="trClass"
-          :current-page="currentPage"
-          :data="data"
+          :current-page="pagination.currentPage"
+          :item-per-page="pagination.itemsPerPage"
+          :data="
+            data.slice(
+              (pagination.currentPage - 1) * pagination.itemsPerPage,
+              pagination.currentPage * pagination.itemsPerPage
+            )
+          "
           :head="data?.length ? head : []"
-          :limit="limit"
           :loading="loading"
           :td-class="tdClass"
           :th-class="['bg-gray-800', thClass]"
@@ -52,18 +57,18 @@
         </CTable>
       </Transition>
     </slot>
-    <slot v-if="total > 10 || noFooter" name="footer">
+    <slot v-if="data?.length > 10 || noFooter" name="footer">
       <Transition mode="out-in" name="dropdown">
         <CTableFooter
           v-if="!loading"
           :key="loading"
-          :current-page="currentPage"
-          :items-per-page="itemsPerPage"
-          :limit="limit"
+          :total="data?.length"
+          :limit="pagination.itemsPerPage"
+          :items-per-page="pagination.itemsPerPage"
+          :current-page="pagination.currentPage"
           :no-footer="noFooter"
-          :total="total"
-          @items-per-page="(e) => emit('itemsPerPage', e)"
-          @page-change="(e) => emit('pageChange', e)"
+          @page-change="(e) => (pagination.currentPage = e)"
+          @items-per-page="(e) => (pagination.itemsPerPage = e)"
         >
           <template v-slot:beforePagination>
             <slot name="beforePagination"></slot>
@@ -86,6 +91,12 @@ import { TClassName } from "@/types/common";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
+const pagination = reactive({
+  total: 0,
+  limit: 10,
+  currentPage: 1,
+  itemsPerPage: 10,
+});
 interface Props {
   title?: string;
   titleClass?: string;
@@ -98,10 +109,10 @@ interface Props {
   head: ITableHead[];
   data: Record<string, any>[];
 
-  total?: number;
-  limit: number;
-  currentPage: number;
-  itemsPerPage?: number;
+  // total?: number;
+  // limit: number;
+  // currentPage: number;
+  // itemsPerPage?: number;
   thClass?: string;
   noHeader?: boolean;
   noSearch?: boolean;

@@ -221,9 +221,9 @@ interface Props {
 
   data: Record<string, any>[];
 
-  limit: number;
+  // limit: number;
   currentPage: number;
-
+  itemPerPage?: number;
   loading?: boolean;
   statusKey?: string;
   statusColors?: any;
@@ -234,7 +234,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 function getIndex(index: number) {
-  return (props?.currentPage - 1) * props?.limit + index + 1;
+  return (props?.currentPage - 1) * 10 + index + 1;
 }
 </script>
 <style>
