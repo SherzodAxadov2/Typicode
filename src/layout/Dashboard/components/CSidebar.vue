@@ -25,7 +25,6 @@
         >
           <RouterLink to="/" class="text-white text-2xl font-bold">
             Typicode
-            <!--            <img alt="EBB" class="h-5" src="/images/svg/logo_light.svg" />-->
           </RouterLink>
         </div>
         <div
@@ -59,7 +58,6 @@
       <div class="flex flex-col py-5 gap-1">
         <div v-for="(menuItem, index) in menu" :key="index">
           <RouterLink
-            v-if="!menuItem?.sub?.length"
             :class="{ '!bg-primary/[0.08]': location === menuItem?.route }"
             :to="menuItem?.route"
             class="py-3 px-5 hover:bg-blue-200/10 transition-300 flex items-center group gap-3 h-12"
@@ -86,87 +84,6 @@
               </p>
             </CollapseTransition>
           </RouterLink>
-          <!-- Todo: refactor class binding -->
-          <div
-            v-else
-            :class="[
-              index === openIndex || isActiveSub(menuItem?.sub)
-                ? 'bg-primary/10'
-                : '',
-            ]"
-            class="transition-300 cursor-pointer"
-          >
-            <div
-              class="py-3 px-5 flex hover:bg-primary/10 transition-300 items-center justify-between gap-3 h-12 group"
-              @click="openMenu(index)"
-            >
-              <div class="flex items-center gap-3">
-                <i
-                  :class="[
-                    menuItem?.svgIcon,
-                    {
-                      '!text-primary':
-                        location === menuItem?.route ||
-                        isActiveSub(menuItem?.sub),
-                    },
-                  ]"
-                  class="text-xl text-gray-100 group-hover:!text-primary transition-300"
-                />
-                <CollapseTransition :duration="300" dimension="width">
-                  <p
-                    v-if="isOpen || hovered"
-                    :class="{ 'font-semibold': isActiveSub(menuItem?.sub) }"
-                    class="text-sm text-white font-normal whitespace-nowrap"
-                  >
-                    {{ $t(menuItem?.heading) }}
-                  </p>
-                </CollapseTransition>
-              </div>
-              <i
-                v-if="isOpen || hovered"
-                :class="[
-                  {
-                    '!-rotate-90 ': index !== openIndex,
-                  },
-                ]"
-                class="icon-chevron text-xl leading-5 transition-300 text-blue/20"
-              />
-            </div>
-            <CollapseTransition>
-              <div
-                v-if="
-                  (menuItem?.sub?.length && index === openIndex && isOpen) ||
-                  (index === openIndex && !isOpen && hovered)
-                "
-              >
-                <RouterLink
-                  v-for="(subMenuItem, idx) in menuItem?.sub"
-                  :key="idx"
-                  :to="subMenuItem?.route"
-                  class="p-3 pl-6 transition-300 flex items-center gap-3 h-12 text-gray-700 group"
-                >
-                  <span
-                    :class="{
-                      '!text-white': location === subMenuItem?.route,
-                    }"
-                    class="group-hover:bg-white transition-300 w-3 h-[2px] bg-gray-200"
-                  />
-                  <CollapseTransition :duration="300" dimension="width">
-                    <p
-                      v-if="isOpen || hovered"
-                      :class="{
-                        '!text-white font-semibold':
-                          location === subMenuItem?.route,
-                      }"
-                      class="text-sm font-normal group-hover:text-white transition-300 whitespace-nowrap"
-                    >
-                      {{ $t(subMenuItem?.heading) }}
-                    </p>
-                  </CollapseTransition>
-                </RouterLink>
-              </div>
-            </CollapseTransition>
-          </div>
         </div>
       </div>
     </div>

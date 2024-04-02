@@ -1,8 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 import Posts from "@/modules/Posts/routes";
+import Alboms from "@/modules/Alboms/routes";
+import Todos from "@/modules/Todos/routes";
 
 const routes: Array<RouteRecordRaw> = [
+    ...Alboms,
+    ...Todos,
   ...Posts,
   {
     path: "/:pathMatch(.*)*",

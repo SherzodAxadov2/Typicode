@@ -47,8 +47,8 @@ import { ELanguage, ILanguage } from "@/types/components/languageSwitcher";
 
 const languages: ILanguage[] = [
   {
-    value: ELanguage.UZ,
-    label: "O'zbekcha",
+    value: ELanguage.EN,
+    label: "English",
     icon: "/src/assets/svg/flags/ru.svg",
   },
   {
@@ -60,7 +60,7 @@ const languages: ILanguage[] = [
 
 const currentLanguage = computed(() => {
   const currentLocale =
-    (window.localStorage.getItem("locale") as unknown as ELanguage) || "ru";
+    (window.localStorage.getItem("locale") as unknown as ELanguage) || "en";
 
   return languages.find((lang) => lang.value === currentLocale);
 });

@@ -1,5 +1,5 @@
 export enum ELanguage {
-  UZ = "uz",
+  EN = "en",
   RU = "ru",
 }
 
