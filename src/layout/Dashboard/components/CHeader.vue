@@ -23,17 +23,12 @@
       <slot name="after-links"></slot>
 
       <CLanguageSwitcher />
-      <!--      <CProfileDropdown-->
-      <!--        v-if="user?.id"-->
-      <!--        :profile-items="profileItems"-->
-      <!--        :user="user"-->
-      <!--      />-->
     </nav>
   </header>
 </template>
 <script lang="ts" setup>
-// import CProfileDropdown from "@/layout/Dashboard/components/CProfileDropdown.vue";
 import { useI18n } from "vue-i18n";
+import { defineProps } from "vue";
 import CLanguageSwitcher from "@/components/CLanguageSwitcher.vue";
 
 const { t } = useI18n();

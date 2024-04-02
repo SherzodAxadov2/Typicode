@@ -16,7 +16,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, defineProps } from "vue";
 
 interface Props {
   type: "success" | "error" | "warning" | "info";

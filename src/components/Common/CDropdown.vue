@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 import { onClickOutside } from "@vueuse/core";
-import { ref } from "vue";
+import { ref, defineProps, defineEmits } from "vue";
 
 import { TClassName } from "@/types/common";
 

@@ -53,7 +53,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, withDefaults, defineProps, defineEmits } from "vue";
 
 interface Props {
   show?: boolean;
