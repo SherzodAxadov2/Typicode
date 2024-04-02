@@ -75,6 +75,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, defineEmits, withDefaults } from "vue";
 import CTable from "@/components/Common/Table/CTable.vue";
 import CTableHeader from "@/components/Common/Table/CTableHeader.vue";
 import CTableFooter from "@/components/Common/Table/CTableFooter.vue";

@@ -30,6 +30,8 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, withDefaults } from "vue";
+
 interface IRoute {
   name: string;
   route: string;

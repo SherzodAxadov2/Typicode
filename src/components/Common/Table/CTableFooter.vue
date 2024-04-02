@@ -19,6 +19,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, defineEmits } from "vue";
 import CommonPagination from "@/components/Common/Table/CPagination.vue";
 import CommonPageLimitChange from "@/components/Common/Table/CPageLimitChange.vue";
 import { computed, ref, WritableComputedRef } from "vue";

@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, defineEmits, withDefaults } from "vue";
 import Input from "@/components/Form/Input/FInput.vue";
 
 import { ref, watch } from "vue";

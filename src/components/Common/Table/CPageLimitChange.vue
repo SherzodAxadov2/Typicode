@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, defineEmits, withDefaults } from "vue";
 import { computed, onMounted, ref, WritableComputedRef } from "vue";
 import Select from "@/components/Form/Select/FSelect.vue";
 

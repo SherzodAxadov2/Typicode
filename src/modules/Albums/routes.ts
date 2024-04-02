@@ -2,12 +2,12 @@ import { RouteRecordRaw } from "vue-router";
 
 const routes: Readonly<RouteRecordRaw[]> = [
   {
-    path: "/alboms",
-    name: "alboms",
+    path: "/albums",
+    name: "albums",
     meta: {
       layout: "default",
     },
-    component: () => import("@/modules/Alboms/pages/PIndex.vue"),
+    component: () => import("@/modules/Albums/pages/PIndex.vue"),
   },
 ];
 

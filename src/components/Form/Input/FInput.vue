@@ -44,6 +44,7 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, defineEmits, withDefaults, defineExpose } from "vue";
 import { ref } from "vue";
 import { TClassName } from "@/types/common";
 

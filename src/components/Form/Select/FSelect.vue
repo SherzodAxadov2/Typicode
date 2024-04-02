@@ -96,9 +96,9 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, defineEmits, withDefaults } from "vue";
 import { onClickOutside, useIntersectionObserver } from "@vueuse/core";
 import { onMounted, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
 
 export type TOption = string | number | { [key: string]: string | number };
 

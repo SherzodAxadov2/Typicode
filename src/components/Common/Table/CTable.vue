@@ -205,6 +205,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, withDefaults } from "vue";
 import { TClassName } from "@/types/common";
 import { ITableHead } from "@/types/components/table";
 

@@ -1,6 +1,12 @@
 {
   "posts": "Posts",
-  "alboms": "Alboms",
-    "users": "Users",
-  "todos": "Todos"
+  "albums": "Albums",
+  "users": "Users",
+  "todos": "Todos",
+  "user": "User",
+  "title": "Title",
+  "actions": "Actions",
+  "albums_number": "{count} albums",
+  "edit": "Edit",
+  "delete": "Delete"
 }

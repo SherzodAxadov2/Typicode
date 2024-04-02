@@ -3,7 +3,7 @@ import { computed, onBeforeMount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { usePagination } from "@/composables/usePagination";
-import { debounce, handleError, updateQueryParams } from "@/utils";
+import { debounce, handleError } from "@/utils";
 import ApiService from "@/services/ApiService";
 
 export function useTableFetch<TD = any>(
@@ -80,13 +80,11 @@ export function useTableFetch<TD = any>(
     offset.value = 0;
     await onPageChange(1);
     searchText.value = text;
-    await updateQueryParams("search", text);
     debounce("search-merchant-search", fetchTableData, 500);
   }
 
   const onPageChange = async (page: number) => {
     if (page && page !== paginationData.currentPage) {
-      await updateQueryParams("page", String(page));
       paginationData.currentPage = page;
       paginationData.offset = (page - 1) * paginationData.defaultLimit;
       changePage(page);
@@ -114,12 +112,6 @@ export function useTableFetch<TD = any>(
     filter.value = obj;
     paginationData.offset = 0;
     paginationData.currentPage = 1;
-    if (route.query?.page) {
-      await updateQueryParams("page", String(paginationData.currentPage));
-    }
-    if (route.query?.offset) {
-      await updateQueryParams("offset", String(paginationData.offset));
-    }
     fetchTableData();
   };
 

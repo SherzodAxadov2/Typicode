@@ -22,8 +22,8 @@ export const menu: IMenu[] = [
     svgIcon: "icon-main",
   },
   {
-    heading: t("alboms"),
-    route: "/alboms",
+    heading: t("albums"),
+    route: "/albums",
     svgIcon: "icon-plugin",
   },
   {

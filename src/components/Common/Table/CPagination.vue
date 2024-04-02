@@ -69,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+import { defineProps, defineEmits, withDefaults } from "vue";
 import { computed, onMounted, watch } from "vue";
 
 interface Props {
