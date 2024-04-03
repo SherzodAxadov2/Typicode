@@ -8,6 +8,7 @@
   </label>
 </template>
 <script setup lang="ts">
+import { defineProps, withDefaults } from "vue";
 interface Props {
   label: string;
   labelClass?: string;

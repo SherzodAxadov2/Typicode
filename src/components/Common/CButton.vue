@@ -62,7 +62,7 @@
 <script lang="ts" setup>
 import { TClassName } from "@/types/common";
 import { TButtonSizes, TButtonVariants } from "@/types/components/button";
-import { computed } from "vue";
+import { computed, defineProps, withDefaults } from "vue";
 
 interface Props {
   variant?: TButtonVariants;

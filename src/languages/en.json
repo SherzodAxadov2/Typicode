@@ -9,5 +9,13 @@
   "albums_number": "{count} albums",
   "edit": "Edit",
   "delete": "Delete",
-  "album_single": "Album Single"
+  "album_single": "Album Single",
+  "select_user": "Select User",
+  "add_album": "Add Album",
+  "edit_album": "Edit Album",
+  "delete_album": "Delete Album",
+  "cancel": "Cancel",
+  "deleted_successfully": "Deleted successfully",
+  "edited_successfully": "Edited successfully",
+  "added_successfully": "Added successfully"
 }

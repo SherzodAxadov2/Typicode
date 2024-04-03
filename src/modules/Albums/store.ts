@@ -50,6 +50,20 @@ export const useAlbumsStore = defineStore("albomStore", () => {
     });
   }
 
+  function deleteAlbum(id: number) {
+    return new Promise<void>((resolve, reject) => {
+      axios
+        .delete(`/albums/${id}`)
+        .then(() => {
+          albums.value = albums.value.filter((album) => album.id !== id);
+          resolve();
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   return {
     albums,
     users,
@@ -57,5 +71,6 @@ export const useAlbumsStore = defineStore("albomStore", () => {
     fetchUsers,
     fetchAlbums,
     fetchAlbumSingle,
+    deleteAlbum,
   };
 });

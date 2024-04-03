@@ -26,10 +26,10 @@ interface Props {
 defineProps<Props>();
 const images = computed(() => {
   return {
-    success: "/images/svg/toast/success.svg",
-    error: "/images/svg/toast/error.svg",
-    warning: "/images/svg/toast/warning.svg",
-    info: "/images/svg/toast/info.svg",
+    success: "/images/toast/success.svg",
+    error: "/images/toast/error.svg",
+    warning: "/images/toast/warning.svg",
+    info: "/images/toast/info.svg",
   };
 });
 </script>

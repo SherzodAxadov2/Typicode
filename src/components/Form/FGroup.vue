@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps, withDefaults } from "vue";
 import Label from "@/components/Form/FLabel.vue";
 
 interface Props {

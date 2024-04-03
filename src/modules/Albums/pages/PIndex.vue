@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CBreadcrumb from "@/components/Common/CBreadcrumb.vue";
 import { useMounted } from "@/composables/useMounted";
+import { required } from "@vuelidate/validators";
 
 import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -11,12 +12,28 @@ import { IAlbum, IUser } from "@/modules/Albums/types";
 import CActionsDropdown from "@/components/Common/Dropdown/CActionsDropdown.vue";
 import CCard from "@/components/Card/CCard.vue";
 import { debounce } from "@/utils";
+import FGroup from "@/components/Form/FGroup.vue";
+import FInput from "@/components/Form/Input/FInput.vue";
+import CButton from "@/components/Common/CButton.vue";
+import { useForm } from "@/composables/useForm";
+import FSelect from "@/components/Form/Select/FSelect.vue";
+import CDialog from "@/components/Common/Dialog/CDialog.vue";
+import CDeleteDialog from "@/components/Common/Dialog/CDeleteDialog.vue";
+import { useHandleError } from "@/composables/useHandleError";
+import { useCustomToast } from "@/composables/useCustomToast";
 
 const store = useAlbumsStore();
 const { mounted } = useMounted();
+const { handleError } = useHandleError();
+const { showToast } = useCustomToast();
 const { t } = useI18n();
 const loading = ref(true);
 const allAlbums = ref<IAlbum[]>([]);
+const selectedData = ref<IAlbum>();
+const buttonLoading = ref(false);
+const show = ref(false);
+const deleteModal = ref(false);
+const isEdit = ref(false);
 const routes = computed(() => [
   {
     name: t("albums"),
@@ -25,6 +42,17 @@ const routes = computed(() => [
 ]);
 const albums = computed(() => store.albums as IAlbum[]);
 const users = computed(() => store.users as IUser[]);
+
+const form = useForm(
+  {
+    title: "",
+    user: "",
+  },
+  {
+    title: { required },
+    user: { required },
+  }
+);
 
 onMounted(() => {
   store.fetchAlbums().finally(() => (loading.value = false));
@@ -57,6 +85,42 @@ function searchAlbums(search: string) {
     },
     200
   );
+}
+
+function openEditModal(data: IAlbum) {
+  selectedData.value = data;
+  isEdit.value = true;
+  show.value = true;
+  form.values.title = data?.title;
+  form.values.user = data?.userId;
+}
+
+function openAddModal() {
+  form.values.title = "";
+  form.values.user = "";
+  show.value = true;
+  isEdit.value = false;
+}
+
+function openDeleteModal(data: IAlbum) {
+  selectedData.value = data;
+  deleteModal.value = true;
+}
+
+function submit() {
+  console.log("submit");
+}
+
+function deleteAlbum() {
+  store
+    .deleteAlbum(Number(selectedData.value?.id))
+    .then(() => {
+      deleteModal.value = false;
+      showToast(t("deleted_successfully"), "success");
+    })
+    .catch((error) => {
+      handleError(error);
+    });
 }
 </script>
 
@@ -95,11 +159,71 @@ function searchAlbums(search: string) {
           </template>
 
           <template #actions="{ row: data }">
-            <CActionsDropdown :list="exchangeActions" :selected-item="data" />
+            <CActionsDropdown
+              :list="exchangeActions"
+              :selected-item="data"
+              @edit="openEditModal(data)"
+              @delete="openDeleteModal(data)"
+            />
           </template>
         </CTableWrapper>
       </CCard>
     </main>
+
+    <CDialog
+      v-bind="{ show }"
+      :title="$t(isEdit ? 'edit_album' : 'add_album')"
+      @close="show = false"
+      body-class="!max-w-[421px]"
+    >
+      <div class="p-5 pt-4">
+        <FGroup class="mt-5" :label="$t('title')">
+          <FInput
+            :placeholder="$t('title')"
+            v-model="form.values.user"
+            :error="form.$v.value.user?.$error"
+          />
+        </FGroup>
+
+        <FGroup class="mt-5" :label="$t('user')">
+          <FSelect
+            v-model="form.values.user"
+            :error="form.$v.value.user?.$error"
+            :options="users"
+            label-key=""
+            value-key=""
+            :placeholder="$t('select_user')"
+            is-checked
+          />
+        </FGroup>
+      </div>
+      <template #footer>
+        <div class="p-5 pt-0 flex items-center justify-end">
+          <div class="flex items-center gap-4">
+            <CButton
+              variant="info"
+              :text="$t('cancel')"
+              type="button"
+              @click="show = false"
+            />
+            <CButton
+              variant="primary"
+              :disabled="form.$v.value.$invalid"
+              :loading="buttonLoading"
+              :text="$t(isEdit ? 'save' : 'add')"
+              @click="submit"
+            />
+          </div>
+        </div>
+      </template>
+    </CDialog>
+    <CDeleteDialog
+      :subtitle="$t('delete_album')"
+      :title="selectedData?.title"
+      :show="deleteModal"
+      @close="deleteModal = false"
+      @submit="deleteAlbum"
+    />
   </div>
 </template>
 
