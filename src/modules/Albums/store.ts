@@ -65,6 +65,21 @@ export const useAlbumsStore = defineStore("albomStore", () => {
     });
   }
 
+  function editAlbum(album: IAlbum) {
+    return new Promise<IAlbum>((resolve, reject) => {
+      axios
+        .put<IAlbum>(`/albums/${album.id}`, album)
+        .then(({ data }) => {
+          const index = albums.value.findIndex((a) => a.id === album.id);
+          albums.value[index] = data;
+          resolve(data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   function deleteAlbum(id: number) {
     return new Promise<void>((resolve, reject) => {
       axios
@@ -87,6 +102,7 @@ export const useAlbumsStore = defineStore("albomStore", () => {
     fetchAlbums,
     fetchAlbumSingle,
     addAlbum,
+    editAlbum,
     deleteAlbum,
   };
 });

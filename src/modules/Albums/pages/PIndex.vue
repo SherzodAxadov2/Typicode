@@ -138,7 +138,24 @@ function addAlbum() {
 function editAlbum() {
   form.$v.value.$touch();
   if (!form.$v.value.$invalid) {
-    console.log(form.values);
+    buttonLoading.value = true;
+    store
+      .editAlbum({
+        id: Number(selectedData.value?.id),
+        title: form.values.title,
+        userId: +form.values.user,
+      })
+      .then(() => {
+        form.$v.value.$reset();
+        show.value = false;
+        showToast(t("edited_successfully"), "success");
+      })
+      .catch((error) => {
+        handleError(error);
+      })
+      .finally(() => {
+        buttonLoading.value = false;
+      });
   }
 }
 
