@@ -10,6 +10,7 @@ import { useAlbumsStore } from "@/modules/Albums/store";
 import { IAlbum, IUser } from "@/modules/Albums/types";
 import CActionsDropdown from "@/components/Common/Dropdown/CActionsDropdown.vue";
 import CCard from "@/components/Card/CCard.vue";
+import { debounce } from "@/utils";
 
 const store = useAlbumsStore();
 const { mounted } = useMounted();
@@ -47,8 +48,14 @@ function getUser(id: number) {
 }
 
 function searchAlbums(search: string) {
-  allAlbums.value = albums.value.filter((album) =>
-    album.title.toLowerCase().includes(search.toLowerCase())
+  debounce(
+    "searchAlbums",
+    () => {
+      allAlbums.value = albums.value.filter((album) =>
+        album.title.toLowerCase().includes(search.toLowerCase())
+      );
+    },
+    200
   );
 }
 </script>
