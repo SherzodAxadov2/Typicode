@@ -9,6 +9,7 @@ import { exchangeActions, modelHead } from "@/modules/Albums/data";
 import { useAlbumsStore } from "@/modules/Albums/store";
 import { IAlbum, IUser } from "@/modules/Albums/types";
 import CActionsDropdown from "@/components/Common/Dropdown/CActionsDropdown.vue";
+import CCard from "@/components/Card/CCard.vue";
 
 const store = useAlbumsStore();
 const { mounted } = useMounted();
@@ -44,33 +45,37 @@ function getUser(id: number) {
     </Teleport>
 
     <main>
-      <CTableWrapper
-        :data="albums"
-        :head="modelHead"
-        :loading="loading"
-        :subtitle="t('albums_number', { count: albums?.length ?? 0 })"
-        :title="$t('albums')"
-        th-class="!bg-gray !text-gray-100 last:!text-right"
-      >
-        <template #id="{ row }">
-          <span class="text-dark text-xs font-medium">{{ row?._index }}.</span>
-        </template>
-        <template #title="{ row }">
-          <RouterLink
-            :to="`/albums/${row?.id}`"
-            class="duration-200 hover:text-blue-600"
-            >{{ row?.title }}</RouterLink
-          >
-        </template>
+      <CCard class="p-6">
+        <CTableWrapper
+          :data="albums"
+          :head="modelHead"
+          :loading="loading"
+          :subtitle="t('albums_number', { count: albums?.length ?? 0 })"
+          :title="$t('albums')"
+          th-class="!bg-gray !text-gray-100 last:!text-right"
+        >
+          <template #id="{ row }">
+            <span class="text-dark text-xs font-medium"
+              >{{ row?._index }}.</span
+            >
+          </template>
+          <template #title="{ row }">
+            <RouterLink
+              :to="`/albums/${row?.id}`"
+              class="duration-200 hover:text-blue-600"
+              >{{ row?.title }}</RouterLink
+            >
+          </template>
 
-        <template #user="{ row }">
-          <p>{{ getUser(+row?.userId) }}</p>
-        </template>
+          <template #user="{ row }">
+            <p>{{ getUser(+row?.userId) }}</p>
+          </template>
 
-        <template #actions="{ row: data }">
-          <CActionsDropdown :list="exchangeActions" :selected-item="data" />
-        </template>
-      </CTableWrapper>
+          <template #actions="{ row: data }">
+            <CActionsDropdown :list="exchangeActions" :selected-item="data" />
+          </template>
+        </CTableWrapper>
+      </CCard>
     </main>
   </div>
 </template>

@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { IAlbum, IUser } from "@/modules/Albums/types";
+import { IAlbum, IAlbumSingle, IUser } from "@/modules/Albums/types";
 import ApiService from "@/services/ApiService";
 import axios from "axios";
 
 export const useAlbumsStore = defineStore("albomStore", () => {
   const albums = ref<IAlbum[]>([]);
   const users = ref<IUser[]>([]);
+  const singleAlbums = ref<IAlbumSingle[]>();
 
   const fetchAlbums = async () => {
     if (albums.value.length) return;
@@ -31,10 +32,30 @@ export const useAlbumsStore = defineStore("albomStore", () => {
     });
   }
 
+  function fetchAlbumSingle(id: number) {
+    return new Promise<IAlbumSingle[]>((resolve, reject) => {
+      axios
+        .get<IAlbumSingle[]>(`photos`, {
+          params: {
+            albumId: id,
+          },
+        })
+        .then(({ data }) => {
+          singleAlbums.value = data;
+          resolve(singleAlbums.value);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   return {
     albums,
     users,
+    singleAlbums,
     fetchUsers,
     fetchAlbums,
+    fetchAlbumSingle,
   };
 });

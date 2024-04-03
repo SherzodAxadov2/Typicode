@@ -35,3 +35,11 @@ export interface IActionType {
   class?: string;
   iconClass?: string;
 }
+
+export interface IAlbumSingle {
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+}

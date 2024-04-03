@@ -24,7 +24,8 @@
     "vue-highlight-words": "^3.0.1",
     "vue-i18n": "^9.1.8",
     "vue-router": "^4.2.2",
-    "vue-toastification": "^2.0.0-rc.5"
+    "vue-toastification": "^2.0.0-rc.5",
+    "swiper": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",

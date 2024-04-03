@@ -68,7 +68,7 @@
           :current-page="pagination.currentPage"
           :no-footer="noFooter"
           @page-change="(e) => (pagination.currentPage = e)"
-          @items-per-page="(e) => (pagination.itemsPerPage = e)"
+          @items-per-page="(e) => perPageChange(e)"
         >
           <template v-slot:beforePagination>
             <slot name="beforePagination"></slot>
@@ -108,11 +108,6 @@ interface Props {
 
   head: ITableHead[];
   data: Record<string, any>[];
-
-  // total?: number;
-  // limit: number;
-  // currentPage: number;
-  // itemsPerPage?: number;
   thClass?: string;
   noHeader?: boolean;
   noSearch?: boolean;
@@ -141,5 +136,10 @@ const filter = reactive({
 
 function handleTableSearch(q: string) {
   emit("search", q);
+}
+
+function perPageChange(count: number) {
+  pagination.itemsPerPage = count;
+  pagination.currentPage = 1;
 }
 </script>

@@ -8,5 +8,6 @@
   "actions": "Actions",
   "albums_number": "{count} albums",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "album_single": "Album Single"
 }
