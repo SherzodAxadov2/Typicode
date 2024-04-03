@@ -2,7 +2,7 @@
 import CBreadcrumb from "@/components/Common/CBreadcrumb.vue";
 import { useMounted } from "@/composables/useMounted";
 
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import CTableWrapper from "@/components/Common/Table/CTableWrapper.vue";
 import { exchangeActions, modelHead } from "@/modules/Albums/data";
@@ -15,6 +15,7 @@ const store = useAlbumsStore();
 const { mounted } = useMounted();
 const { t } = useI18n();
 const loading = ref(true);
+const allAlbums = ref<IAlbum[]>([]);
 const routes = computed(() => [
   {
     name: t("albums"),
@@ -29,12 +30,26 @@ onMounted(() => {
   store.fetchUsers();
 });
 
+watch(
+  albums,
+  (newVal) => {
+    allAlbums.value = newVal;
+  },
+  { deep: true }
+);
+
 function getUser(id: number) {
   let user = users.value?.find((el) => el?.id === id);
   if (user) {
     return user?.name;
   }
   return;
+}
+
+function searchAlbums(search: string) {
+  allAlbums.value = albums.value.filter((album) =>
+    album.title.toLowerCase().includes(search.toLowerCase())
+  );
 }
 </script>
 
@@ -47,9 +62,10 @@ function getUser(id: number) {
     <main>
       <CCard class="p-6">
         <CTableWrapper
-          :data="albums"
+          :data="allAlbums"
           :head="modelHead"
           :loading="loading"
+          @search="searchAlbums"
           :subtitle="t('albums_number', { count: albums?.length ?? 0 })"
           :title="$t('albums')"
           th-class="!bg-gray !text-gray-100 last:!text-right"
