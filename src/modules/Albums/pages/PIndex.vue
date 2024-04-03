@@ -108,7 +108,38 @@ function openDeleteModal(data: IAlbum) {
 }
 
 function submit() {
-  console.log("submit");
+  isEdit.value ? editAlbum() : addAlbum();
+}
+
+function addAlbum() {
+  form.$v.value.$touch();
+  if (!form.$v.value.$invalid) {
+    buttonLoading.value = true;
+    let data = {
+      title: form.values.title,
+      userId: form.values.user,
+    };
+    store
+      .addAlbum(data)
+      .then(() => {
+        form.$v.value.$reset();
+        show.value = false;
+        showToast(t("added_successfully"), "success");
+      })
+      .catch((error) => {
+        handleError(error);
+      })
+      .finally(() => {
+        buttonLoading.value = false;
+      });
+  }
+}
+
+function editAlbum() {
+  form.$v.value.$touch();
+  if (!form.$v.value.$invalid) {
+    console.log(form.values);
+  }
 }
 
 function deleteAlbum() {
@@ -141,6 +172,17 @@ function deleteAlbum() {
           :title="$t('albums')"
           th-class="!bg-gray !text-gray-100 last:!text-right"
         >
+          <template #afterSearch>
+            <CButton
+              :text="$t('add')"
+              icon="icon-plus"
+              class="flex items-center py-2 px-4 gap-2"
+              size="md"
+              @click="openAddModal"
+              v-bind="{ loading, disabled: loading }"
+            />
+          </template>
+
           <template #id="{ row }">
             <span class="text-dark text-xs font-medium"
               >{{ row?._index }}.</span
@@ -174,14 +216,14 @@ function deleteAlbum() {
       v-bind="{ show }"
       :title="$t(isEdit ? 'edit_album' : 'add_album')"
       @close="show = false"
-      body-class="!max-w-[421px]"
+      body-class="!max-w-[421px] !overflow-y-visible"
     >
       <div class="p-5 pt-4">
         <FGroup class="mt-5" :label="$t('title')">
           <FInput
             :placeholder="$t('title')"
-            v-model="form.values.user"
-            :error="form.$v.value.user?.$error"
+            v-model="form.values.title"
+            :error="form.$v.value.title?.$error"
           />
         </FGroup>
 
@@ -190,8 +232,8 @@ function deleteAlbum() {
             v-model="form.values.user"
             :error="form.$v.value.user?.$error"
             :options="users"
-            label-key=""
-            value-key=""
+            label-key="name"
+            value-key="id"
             :placeholder="$t('select_user')"
             is-checked
           />
