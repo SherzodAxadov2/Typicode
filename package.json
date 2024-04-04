@@ -45,7 +45,6 @@
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-storybook": "^0.5.12",
     "eslint-plugin-vue": "^8.0.1",
-    "postcss": "^8.4.33",
     "prettier": "^2.5.0",
     "sass": "^1.70.0",
     "tailwindcss": "^3.4.1",
