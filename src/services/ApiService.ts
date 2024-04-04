@@ -11,7 +11,7 @@ class ApiService {
     ApiService.vueInstance = app;
     ApiService.vueInstance.use(VueAxios, axios);
     ApiService.vueInstance.axios.defaults.baseURL =
-      import.meta.env.VITE_APP_BASE_URL;
+      'https://jsonplaceholder.typicode.com/';
     this.handleResponseError(ApiService.vueInstance.axios);
   }
 

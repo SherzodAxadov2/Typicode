@@ -22,7 +22,7 @@
           :text="$t(submitText || 'delete')"
           :variant="variant || 'error'"
           class="w-full"
-          v-bind="{ loading }"
+          v-bind="{ loading, disabled: loading }"
           @click="$emit('submit')"
         />
       </div>

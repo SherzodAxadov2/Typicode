@@ -160,6 +160,7 @@ function editAlbum() {
 }
 
 function deleteAlbum() {
+  buttonLoading.value = true
   store
     .deleteAlbum(Number(selectedData.value?.id))
     .then(() => {
@@ -168,7 +169,9 @@ function deleteAlbum() {
     })
     .catch((error) => {
       handleError(error);
-    });
+    }).finally(() => {
+    buttonLoading.value = false;
+  });
 }
 </script>
 
@@ -280,6 +283,7 @@ function deleteAlbum() {
       :subtitle="$t('delete_album')"
       :title="selectedData?.title"
       :show="deleteModal"
+      :loading="buttonLoading"
       @close="deleteModal = false"
       @submit="deleteAlbum"
     />
